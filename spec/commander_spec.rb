@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../lib/commander.rb"
-require_relative "../lib/board.rb"
-require_relative "../lib/robot.rb"
+require_relative "../lib/robot_placement_checker.rb"
 require "rspec/its"
 
 RSpec.describe Commander do
@@ -21,36 +20,28 @@ RSpec.describe Commander do
     let(:facing) { "upward" }
 
     before do
-      allow(board).to receive(:cell_available?).with(x, y).and_return(cell_available?)
+      allow(RobotPlacementChecker).to receive(:valid?).with(
+        facing: facing, board: board, x: x, y: y,
+      ).and_return(placement_valid?)
     end
 
-    context "when the provided location is available" do
-      let(:cell_available?) { false }
+    context "when the robot placement information is valid" do
+      let(:placement_valid?) { true }
 
-      it { is_expected.to eq("Location (#{x}, #{y}) not available") }
-    end
+      it "adds the robot to the board successfully" do
+        expect(board).to receive(:occupy_cell).with(x: x, y: y, name: name, facing: facing)
 
-    context "when the cell at the  provided location is available" do
-      let(:cell_available?) { true }
-
-      context "but the provided facing direction for robot is invalid" do
-        before do
-          allow(Robot).to receive(:valid_facing_direction?).and_return(false)
-        end
-
-        it { is_expected.to eq("Robot cannot face the direction '#{facing}'") }
+        place_robot
       end
+    end
 
-      context "and the provided facing direction for the robot is valid" do
-        before do
-          allow(Robot).to receive(:valid_facing_direction?).and_return(true)
-        end
+    context "when the robot placement information is not valid" do
+      let(:placement_valid?) { false }
 
-        it "adds the robot to the board successfully" do
-          expect(board).to receive(:occupy_cell).with(x: x, y: y, name: name, facing: facing)
+      it "does not attempt to add the robot to the board" do
+        expect(board).not_to receive(:occupy_cell)
 
-          place_robot
-        end
+        place_robot
       end
     end
   end

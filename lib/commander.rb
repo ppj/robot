@@ -8,13 +8,7 @@ class Commander
   end
 
   def place_robot(name:, x:, y:, facing:)
-    unless location_available?(x, y)
-      return "Location (#{x}, #{y}) not available"
-    end
-
-    unless facing_direction_valid?(facing)
-      return "Robot cannot face the direction '#{facing}'"
-    end
+    return unless RobotPlacementChecker.valid?(facing: facing, board: board, x: x, y: y)
 
     board.occupy_cell(x: x, y: y, name: name, facing: facing)
   end
