@@ -10,7 +10,7 @@ class Commander
   def place_robot(name:, x:, y:, facing:)
     return unless RobotPlacementChecker.valid?(facing: facing, board: board, x: x, y: y)
 
-    board.occupy_cell(x: x, y: y, name: name, facing: facing)
+    board.fill_location(x: x, y: y, name: name, facing: facing)
   end
 
   private

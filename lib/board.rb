@@ -28,6 +28,12 @@ class Board
     cells[x][y] if x <= max_x && y <= max_y
   end
 
+  def fill_location(x:, y:, name:, facing:)
+    return unless RobotPlacementChecker.valid?(facing: facing, board: self, x: x, y: y)
+
+    cell_at_location(x, y).robot = find_or_create_new_robot(name, facing)
+  end
+
   private
 
   def allocate_cells
@@ -42,5 +48,28 @@ class Board
     end
 
     cells
+  end
+
+  def find_or_create_new_robot(name, facing)
+    removed_robot_from_old_cell(name) ||
+      Robot.new(name: name, facing: facing)
+  end
+
+  def removed_robot_from_old_cell(name)
+    if cell_with_robot(name)
+      robot = cell_with_robot(name).robot
+      cell_with_robot(name).robot = nil
+      robot
+    end
+  end
+
+  def cell_with_robot(name)
+    cells_with_robots[name]
+  end
+
+  def cells_with_robots
+    cells.flatten.map do |cell|
+      [cell.robot.name, cell] unless cell.empty?
+    end.compact.to_h
   end
 end

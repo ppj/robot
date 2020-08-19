@@ -29,7 +29,7 @@ RSpec.describe Commander do
       let(:placement_valid?) { true }
 
       it "adds the robot to the board successfully" do
-        expect(board).to receive(:occupy_cell).with(x: x, y: y, name: name, facing: facing)
+        expect(board).to receive(:fill_location).with(x: x, y: y, name: name, facing: facing)
 
         place_robot
       end
@@ -39,7 +39,7 @@ RSpec.describe Commander do
       let(:placement_valid?) { false }
 
       it "does not attempt to add the robot to the board" do
-        expect(board).not_to receive(:occupy_cell)
+        expect(board).not_to receive(:fill_location)
 
         place_robot
       end

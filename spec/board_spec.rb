@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../lib/board.rb"
+require_relative "../lib/robot_placement_checker.rb"
+
 require "rspec/its"
 
 RSpec.describe Board do
@@ -86,6 +88,77 @@ RSpec.describe Board do
         end
 
         it { is_expected.to be(false) }
+      end
+    end
+  end
+
+  describe "#fill_location" do
+    subject(:fill_location) { board.fill_location(x: x, y: y, name: name, facing: facing) }
+    let(:x) { board.max_x }
+    let(:y) { board.max_y }
+    let(:name) { "iRoboto" }
+    let(:facing) { "facing" }
+
+    before do
+      allow(RobotPlacementChecker).to receive(:valid?).with(
+        facing: facing, board: board, x: x, y: y,
+      ).and_return(placement_valid?)
+    end
+
+    let(:cell) { board.cell_at_location(x, y) }
+
+    context "when the robot placement information is not valid" do
+      let(:placement_valid?) { false }
+
+      it "does not attempt to put the robot in the cell" do
+        expect(cell).not_to receive(:robot)
+
+        fill_location
+      end
+    end
+
+    context "when the robot placement information is valid" do
+      let(:placement_valid?) { true }
+
+      context "when a robot with a provided name is already on the board" do
+        before do
+          old_cell.robot = robot
+        end
+        let(:old_cell) { board.cell_at_location(old_x, old_y) }
+        let(:old_x) { 0 }
+        let(:old_y) { 0 }
+        let(:robot) { double(name: name) }
+
+        it "removes the robot from the old location" do
+          expect(old_cell).to receive(:robot=).with(nil)
+
+          fill_location
+        end
+
+        it "teleports it to the new location" do
+          expect(cell).to receive(:robot=).with(robot)
+
+          fill_location
+        end
+      end
+
+      context "when a robot with a provided name is not on the board" do
+        before do
+          allow(Robot).to receive(:new).and_return(robot)
+        end
+        let(:robot) { double }
+
+        it "creates a new robot" do
+          expect(Robot).to receive(:new).with(name: name, facing: facing)
+
+          fill_location
+        end
+
+        it "adds the robot to the board successfully" do
+          expect(cell).to receive(:robot=).with(robot)
+
+          fill_location
+        end
       end
     end
   end
