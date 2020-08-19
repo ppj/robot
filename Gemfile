@@ -5,3 +5,5 @@ group :development, :test do
   gem "rspec-its"
   gem 'pry'
 end
+
+gem 'finer_struct'
