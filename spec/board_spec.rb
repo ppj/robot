@@ -32,4 +32,61 @@ RSpec.describe Board do
       end
     end
   end
+
+  describe "#cell_at_location" do
+    subject(:cell_at_location) { board.cell_at_location(x, y) }
+
+    context "when the x value is out of bounds" do
+      let(:x) { board.max_x + 1 }
+      let(:y) { board.max_y - 1 }
+
+      it { is_expected.to be(nil) }
+    end
+
+    context "when the y value is out of bounds" do
+      let(:x) { board.max_x - 1 }
+      let(:y) { board.max_y + 1 }
+
+      it { is_expected.to be(nil) }
+    end
+
+    context "when the location is inside the boundary" do
+      let(:x) { board.max_x }
+      let(:y) { board.max_y }
+
+      it { is_expected.to be_a(Board::Cell) }
+    end
+  end
+
+  describe "#cell_available?" do
+    subject(:cell_available?) { board.cell_available?(x, y) }
+
+    context "when the x value is out of bounds" do
+      let(:x) { board.max_x + 1 }
+      let(:y) { board.max_y - 1 }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the y value is out of bounds" do
+      let(:x) { board.max_x - 1 }
+      let(:y) { board.max_y + 1 }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the location is inside the boundary" do
+      let(:x) { board.max_x }
+      let(:y) { board.max_y }
+
+      context "but the cell at the location is not empty" do
+        before do
+          # TODO: Replace once occupy cell is implemented
+          board.cell_at_location(x, y).robot = double
+        end
+
+        it { is_expected.to be(false) }
+      end
+    end
+  end
 end

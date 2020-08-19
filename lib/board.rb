@@ -18,6 +18,16 @@ class Board
     @cells = allocate_cells
   end
 
+  def cell_available?(x, y)
+    x <= max_x &&
+      y <= max_y &&
+      cell_at_location(x, y).empty?
+  end
+
+  def cell_at_location(x, y)
+    cells[x][y] if x <= max_x && y <= max_y
+  end
+
   private
 
   def allocate_cells
