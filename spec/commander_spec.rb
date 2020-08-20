@@ -19,30 +19,10 @@ RSpec.describe Commander do
     let(:y) { 3 }
     let(:facing) { "upward" }
 
-    before do
-      allow(RobotPlacementChecker).to receive(:valid?).with(
-        facing: facing, board: board, x: x, y: y,
-      ).and_return(placement_valid?)
-    end
+    it "tells the board to fill the given location" do
+      expect(board).to receive(:fill_location).with(x: x, y: y, name: name, facing: facing)
 
-    context "when the robot placement information is valid" do
-      let(:placement_valid?) { true }
-
-      it "adds the robot to the board successfully" do
-        expect(board).to receive(:fill_location).with(x: x, y: y, name: name, facing: facing)
-
-        place_robot
-      end
-    end
-
-    context "when the robot placement information is not valid" do
-      let(:placement_valid?) { false }
-
-      it "does not attempt to add the robot to the board" do
-        expect(board).not_to receive(:fill_location)
-
-        place_robot
-      end
+      place_robot
     end
   end
 end
