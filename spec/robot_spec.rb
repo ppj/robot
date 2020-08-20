@@ -18,4 +18,28 @@ RSpec.describe Robot do
       end
     end
   end
+
+  describe "#turn" do
+    describe ":right" do
+      it "rotates the robot clockwise by 90°", :aggregate_failures do
+        robot = described_class.new(name: "me", facing: "NORTH")
+
+        expect { robot.turn(:right) }.to change { robot.facing }.from("NORTH").to("EAST")
+        expect { robot.turn(:right) }.to change { robot.facing }.from("EAST").to("SOUTH")
+        expect { robot.turn(:right) }.to change { robot.facing }.from("SOUTH").to("WEST")
+        expect { robot.turn(:right) }.to change { robot.facing }.from("WEST").to("NORTH")
+      end
+    end
+
+    describe ":left" do
+      it "rotates the robot anticlockwise by 90°", :aggregate_failures do
+        robot = described_class.new(name: "me", facing: "NORTH")
+
+        expect { robot.turn(:left) }.to change { robot.facing }.from("NORTH").to("WEST")
+        expect { robot.turn(:left) }.to change { robot.facing }.from("WEST").to("SOUTH")
+        expect { robot.turn(:left) }.to change { robot.facing }.from("SOUTH").to("EAST")
+        expect { robot.turn(:left) }.to change { robot.facing }.from("EAST").to("NORTH")
+      end
+    end
+  end
 end
