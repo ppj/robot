@@ -16,6 +16,15 @@ class Commander
     robot_details = board.robot_details(name)
     return if robot_details.nil?
 
+    x, y = new_location(robot_details)
+    board.fill_location(x: x, y: y, name: name, facing: robot_details[:facing])
+  end
+
+  private
+
+  attr_reader :board
+
+  def new_location(robot_details)
     x, y, facing = robot_details[:x], robot_details[:y], robot_details[:facing]
 
     case facing
@@ -29,10 +38,6 @@ class Commander
       x = x - 1
     end
 
-    board.fill_location(x: x, y: y, name: name, facing: facing)
+    [x, y]
   end
-
-  private
-
-  attr_reader :board
 end
