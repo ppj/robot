@@ -20,6 +20,10 @@ class Commander
     board.fill_location(x: x, y: y, name: name, facing: robot_details[:facing])
   end
 
+  def turn_robot(name, direction)
+    board.robot(name)&.turn(direction)
+  end
+
   def report(name)
     board.robot_details(name)
   end

@@ -101,4 +101,34 @@ RSpec.describe Commander do
       report
     end
   end
+
+  describe "#turn_robot" do
+    subject(:turn_robot) { commander.turn_robot(name, direction) }
+    let(:name) { "robocop" }
+    let(:direction) { double }
+
+    before do
+      allow(board).to receive(:robot).with(name).and_return(robot)
+    end
+
+    context "when the board has the robot with the provided name" do
+      let(:robot) { double }
+
+      it "asks the robot to turn in the provided direction" do
+        expect(robot).to receive(:turn).with(direction)
+
+        turn_robot
+      end
+    end
+
+    context "when the board does not have a robot with the provided name" do
+      let(:robot) { nil }
+
+      it "does not attempt to turn any robot" do
+        expect(robot).not_to receive(:turn)
+
+        turn_robot
+      end
+    end
+  end
 end

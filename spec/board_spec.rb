@@ -202,4 +202,21 @@ RSpec.describe Board do
       it { is_expected.to eq({ x: x, y: y, facing: facing }) }
     end
   end
+
+  describe "#robot" do
+    subject(:robot) { board.robot(name) }
+    let(:name) { "roboto" }
+
+    context "when a robot with the provided name is not on the board" do
+      it { is_expected.to be(nil) }
+    end
+
+    context "when a robot with the provided name is on the board" do
+      before do
+        board.fill_location(x: 1, y: 1, name: name, facing: "EAST")
+      end
+
+      it { is_expected.not_to be(nil) }
+    end
+  end
 end

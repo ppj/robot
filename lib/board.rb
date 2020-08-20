@@ -38,6 +38,10 @@ class Board
     end
   end
 
+  def robot(name)
+    cell_with_robot(name)&.robot
+  end
+
   private
 
   def allocate_cells
