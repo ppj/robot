@@ -7,7 +7,7 @@
     - tell whether a Cell is available
       - within boundary, AND
       - empty
-    - allocate a given Robot to an available Cell
+    - put a given Robot in its empty Cell
     - tell a Cell to vacate itself
 
   ### Cell
@@ -21,12 +21,9 @@
 ## Robot
   - with the following attributes
     - name
-    - facing direction (once placed on a Board)
-    - Cell (once it is placed on a Board)
+    - facing direction
   - can perform the following actions
-    - occupy a Cell on a Board (optional until placed)
-    - turn 90° given the side to turn (within a Cell)
-    - move one Cell on its Board in the direction it is facing
+    - turn 90° given the side to turn
 
 ## Commander
   - with the following attributes
@@ -34,4 +31,4 @@
   - can do the following
     - place a Robot with the given name & facing direction on the Board given the x & y (includes teleporting it)
     - tell a Robot with a given name to turn left or right
-    - tell a Robot to move one step
+    - move a Robot a Cell in the direction it is facing
