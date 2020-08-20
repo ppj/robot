@@ -90,4 +90,15 @@ RSpec.describe Commander do
       end
     end
   end
+
+  describe "#report" do
+    subject(:report) { commander.report(name) }
+    let(:name) { "bobot" }
+
+    it "asks the board for the details of the robot" do
+      expect(board).to receive(:robot_details).with(name)
+
+      report
+    end
+  end
 end

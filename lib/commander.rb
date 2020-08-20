@@ -20,6 +20,10 @@ class Commander
     board.fill_location(x: x, y: y, name: name, facing: robot_details[:facing])
   end
 
+  def report(name)
+    board.robot_details(name)
+  end
+
   private
 
   attr_reader :board
