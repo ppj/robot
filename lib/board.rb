@@ -19,19 +19,17 @@ class Board
   end
 
   def cell_available?(x, y)
-    x <= max_x &&
-      y <= max_y &&
-      cell_at_location(x, y).empty?
+    cell_at_location(x, y)&.empty? || false
   end
 
   def cell_at_location(x, y)
-    cells[x][y] if x <= max_x && y <= max_y
+    cells[x][y] if x_in_board?(x) && y_in_board?(y)
   end
 
   def fill_location(x:, y:, name:, facing:)
     return unless RobotPlacementChecker.valid?(facing: facing, board: self, x: x, y: y)
 
-    cell_at_location(x, y).robot = find_or_create_new_robot(name, facing)
+    cell_at_location(x, y)&.robot = find_or_create_new_robot(name, facing)
   end
 
   def robot_details(name)
@@ -54,6 +52,14 @@ class Board
     end
 
     cells
+  end
+
+  def x_in_board?(x)
+    x >= 0 && x <= max_x
+  end
+
+  def y_in_board?(y)
+    y >= 0 && y <= max_y
   end
 
   def find_or_create_new_robot(name, facing)

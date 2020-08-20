@@ -63,16 +63,30 @@ RSpec.describe Board do
   describe "#cell_available?" do
     subject(:cell_available?) { board.cell_available?(x, y) }
 
-    context "when the x value is out of bounds" do
+    context "when the x value is greater than the max x of the board" do
       let(:x) { board.max_x + 1 }
       let(:y) { board.max_y - 1 }
 
       it { is_expected.to be(false) }
     end
 
-    context "when the y value is out of bounds" do
+    context "when the x value is negative" do
+      let(:x) { -1 }
+      let(:y) { board.max_y - 1 }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the y value is great than the max y of the board" do
       let(:x) { board.max_x - 1 }
       let(:y) { board.max_y + 1 }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the y value is negative" do
+      let(:x) { board.max_x - 1 }
+      let(:y) { -1 }
 
       it { is_expected.to be(false) }
     end
