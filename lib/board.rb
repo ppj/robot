@@ -51,15 +51,15 @@ class Board
   end
 
   def find_or_create_new_robot(name, facing)
-    removed_robot_from_old_cell(name) ||
+    teleported_robot(name, facing) ||
       Robot.new(name: name, facing: facing)
   end
 
-  def removed_robot_from_old_cell(name)
+  def teleported_robot(name, facing)
     if cell_with_robot(name)
       robot = cell_with_robot(name).robot
       cell_with_robot(name).robot = nil
-      robot
+      robot.tap { |robot| robot.facing = facing }
     end
   end
 

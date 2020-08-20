@@ -127,18 +127,24 @@ RSpec.describe Board do
         let(:old_cell) { board.cell_at_location(old_x, old_y) }
         let(:old_x) { 0 }
         let(:old_y) { 0 }
-        let(:robot) { double(name: name) }
+        let(:robot) { double(name: name, "facing=": nil) }
 
         it "removes the robot from the old location" do
-          expect(old_cell).to receive(:robot=).with(nil)
-
           fill_location
+
+          expect(old_cell).to be_empty
         end
 
         it "teleports it to the new location" do
-          expect(cell).to receive(:robot=).with(robot)
-
           fill_location
+
+          expect(cell.robot).to eq(robot)
+        end
+
+        it "assigns the specified direction to the teleported robot" do
+          fill_location
+
+          expect(robot).to have_received(:facing=).with(facing)
         end
       end
 

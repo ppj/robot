@@ -14,6 +14,10 @@ class Robot
     VALID_FACING_DIRECTIONS.include?(facing)
   end
 
+  def facing=(facing)
+    @facing = validated_facing_direction(facing)
+  end
+
   private
 
   VALID_FACING_DIRECTIONS = %w(NORTH EAST SOUTH WEST)
