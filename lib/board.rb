@@ -34,6 +34,12 @@ class Board
     cell_at_location(x, y).robot = find_or_create_new_robot(name, facing)
   end
 
+  def robot_details(name)
+    if (cell = cell_with_robot(name))
+      { x: cell.x, y: cell.y, facing: cell.robot.facing }
+    end
+  end
+
   private
 
   def allocate_cells
