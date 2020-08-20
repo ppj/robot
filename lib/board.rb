@@ -4,7 +4,7 @@ require "finer_struct"
 require_relative "./robot.rb"
 
 class Board
-  class Cell < FinerStruct::Mutable(:board, :x, :y, :robot)
+  class Cell < FinerStruct::Mutable(:x, :y, :robot)
     def empty?
       robot.nil?
     end
@@ -42,7 +42,7 @@ class Board
     (max_x + 1).times do |x|
       cell_row = []
       (max_y + 1).times do |y|
-        cell_row << Cell.new(board: self, x: x, y: y)
+        cell_row << Cell.new(x: x, y: y)
       end
       cells << cell_row
     end

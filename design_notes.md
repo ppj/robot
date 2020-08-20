@@ -10,14 +10,13 @@
     - allocate a given Robot to an available Cell
     - tell a Cell to vacate itself
 
-## Cell
-  - with the following attributes
-    - Board
-    - x coordinate  
-    - y coordinate
-    - Robot occupying it (optional)
-  - can perform the following actions
-    - tell whether it is empty or occupied
+  ### Cell
+    - with the following attributes
+      - x coordinate  
+      - y coordinate
+      - Robot when it is occupied
+    - can perform the following actions
+      - tell whether it is empty or not
 
 ## Robot
   - with the following attributes
