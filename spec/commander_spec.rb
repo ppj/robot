@@ -121,9 +121,9 @@ RSpec.describe Commander do
   end
 
   describe "#turn_robot" do
-    subject(:turn_robot) { commander.turn_robot(name, direction) }
+    subject(:turn_robot) { commander.turn_robot(name: name, side: side) }
     let(:name) { "robocop" }
-    let(:direction) { double }
+    let(:side) { double }
 
     before do
       allow(board).to receive(:robot).with(name).and_return(robot)
@@ -132,8 +132,8 @@ RSpec.describe Commander do
     context "when the board has the robot with the provided name" do
       let(:robot) { double }
 
-      it "asks the robot to turn in the provided direction" do
-        expect(robot).to receive(:turn).with(direction)
+      it "asks the robot to turn to the provided side" do
+        expect(robot).to receive(:turn).with(side)
 
         turn_robot
       end
