@@ -1,3 +1,18 @@
+## Parser
+  - with the following attributes
+    - input command
+  - can do the following
+    - determine the action the Commander should take
+
+## Commander
+  - with the following attributes
+    - Board
+  - can do the following
+    - place a Robot on the board given a name, facing direction, x & y
+    - move a Robot by one Cell in the direction it is facing
+    - tell a Robot with a given name to turn left or right
+    - ask the board for a Robots details (x, y, facing) given its name
+
 ## Board
   - with the following attributes
     - X bound
@@ -26,12 +41,3 @@
   - can perform the following actions
     - sets a provided facing direction
     - turn 90° given the side to turn
-
-## Commander
-  - with the following attributes
-    - Board
-  - can do the following
-    - place a Robot on the board given a name, facing direction, x & y
-    - move a Robot by one Cell in the direction it is facing
-    - tell a Robot with a given name to turn left or right
-    - ask the board for a Robots details (x, y, facing) given its name
