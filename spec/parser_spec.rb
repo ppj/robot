@@ -51,6 +51,16 @@ RSpec.describe Parser do
           end
         end
       end
+
+      context "with incorrect capitalisation of facing direction" do
+        it "still works" do
+          ["north", "east", "south", "west"].each do |facing|
+            expect(described_class.parse("ROBOCOP: place 1,2,#{facing}")).to(
+              eq([:place_robot, { name: "ROBOCOP", x: 1, y: 2, facing: facing.upcase }])
+            )
+          end
+        end
+      end
     end
 
     context "invalid input" do

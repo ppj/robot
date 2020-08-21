@@ -41,7 +41,7 @@ class Parser
   def placement_params(placement)
     x, y, facing = placement.join.split(",").map(&:strip)
     return if invalid?(x) || invalid?(y) || facing.nil?
-    { name: name, x: x.to_i, y: y.to_i, facing: facing }
+    { name: name, x: x.to_i, y: y.to_i, facing: facing.upcase }
   end
 
   def invalid?(x_or_y)
