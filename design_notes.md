@@ -7,8 +7,9 @@
     - tell whether a Cell is available
       - within boundary, AND
       - empty
-    - put a given Robot in its empty Cell
-    - tell a Cell to vacate itself
+    - put a given Robot in its available Cell
+    - reports the details given a robot name
+    - returns a robot given a name
 
   ### Cell
     - with the following attributes
@@ -23,12 +24,14 @@
     - name
     - facing direction
   - can perform the following actions
+    - sets a provided facing direction
     - turn 90° given the side to turn
 
 ## Commander
   - with the following attributes
     - Board
   - can do the following
-    - place a Robot with the given name & facing direction on the Board given the x & y (includes teleporting it)
+    - place a Robot on the board given a name, facing direction, x & y
+    - move a Robot by one Cell in the direction it is facing
     - tell a Robot with a given name to turn left or right
-    - move a Robot a Cell in the direction it is facing
+    - ask the board for a Robots details (x, y, facing) given its name
