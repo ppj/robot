@@ -16,18 +16,18 @@ class Parser
     action_details = action_details.split.map(&:strip)
     action = action_details.shift
 
-    case action
-    when "PLACE"
+    case action.downcase
+    when "place"
       return if action_details.empty?
 
       [:place_robot, placement_params(action_details)] if placement_params(action_details)
-    when "MOVE"
+    when "move"
       [:move_robot, name]
-    when "LEFT"
+    when "left"
       [:turn_robot, { name: name, side: :left }]
-    when "RIGHT"
+    when "right"
       [:turn_robot, { name: name, side: :right }]
-    when "REPORT"
+    when "report"
       [:report, name]
     else
       nil

@@ -38,6 +38,19 @@ RSpec.describe Parser do
 
         it { is_expected.to eq([:report, "ROBOCOP"]) }
       end
+
+      context "with incorrect capitalisation of actions" do
+        it "still works", :aggregate_failures do
+          [
+            ["ROBOCOP: move", [:move_robot, "ROBOCOP"]],
+            ["ROBOCOP: left", [:turn_robot, { name: "ROBOCOP", side: :left }]],
+            ["ROBOCOP: right", [:turn_robot, { name: "ROBOCOP", side: :right }]],
+            ["ROBOCOP: place 1,2,EAST", [:place_robot, { name: "ROBOCOP", x: 1, y: 2, facing: "EAST" }]],
+          ].each do |input, expected|
+            expect(described_class.parse(input)).to eq(expected)
+          end
+        end
+      end
     end
 
     context "invalid input" do
