@@ -8,8 +8,35 @@ def commander
   @commander ||= Commander.new
 end
 
+def process_input(input)
+  parsed_input = Parser.parse(input)
+  return unless parsed_input
+
+  action, params = parsed_input
+  if action == :report
+    puts commander.send(action, params).to_s
+  else
+    commander.send(action, params)
+  end
+end
+
+file = ARGV[0]
+
+if file
+  if File.exist?(file)
+    File.readlines(file).each do |line|
+      process_input(line)
+    end
+  else
+    puts "Could not find the file '#{file}'"
+  end
+  exit
+end
+
 puts <<-Help
 Command line interface to manipulate robots on a board:
+
+Enter EXIT to quit, or
 
 Enter a command in the following format:
 
@@ -22,21 +49,11 @@ NAME: ACTION X,Y,F
       Y - Y co-ordinate of the cell where the robot is to be placed
       F - one of NORTH, SOUTH, EAST, WEST
 
-or type EXIT to quit
-
 Help
 
 loop do
   input = gets.chomp
-  break if input&.downcase == "exit"
+  exit if input&.downcase == "exit"
 
-  parsed_input = Parser.parse(input)
-  next unless parsed_input
-
-  action, params = parsed_input
-  if action == :report
-    puts commander.send(action, params)
-  else
-    commander.send(action, params)
-  end
+  process_input(input)
 end
