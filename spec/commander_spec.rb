@@ -95,10 +95,28 @@ RSpec.describe Commander do
     subject(:report) { commander.report(name) }
     let(:name) { "bobot" }
 
+    before do
+      allow(board).to receive(:robot_details).and_return(robot_details)
+    end
+    let(:robot_details) { nil }
+
     it "asks the board for the details of the robot" do
       expect(board).to receive(:robot_details).with(name)
 
       report
+    end
+
+    context "when no robot details are found" do
+      it { is_expected.to be(nil) }
+    end
+
+    context "when robot details can be found" do
+      let(:robot_details) { { x: x, y: y, facing: facing } }
+      let(:x) { 2 }
+      let(:y) { 3 }
+      let(:facing) { "NORTH" }
+
+      it { is_expected.to eq("#{name}: #{x},#{y},#{facing}") }
     end
   end
 
@@ -125,9 +143,7 @@ RSpec.describe Commander do
       let(:robot) { nil }
 
       it "does not attempt to turn any robot" do
-        expect(robot).not_to receive(:turn)
-
-        turn_robot
+        expect(turn_robot).to be(nil)
       end
     end
   end

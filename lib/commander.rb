@@ -25,7 +25,10 @@ class Commander
   end
 
   def report(name)
-    board.robot_details(name)
+    robot_details = board.robot_details(name)
+    if robot_details
+      "#{name}: #{robot_details[:x]},#{robot_details[:y]},#{robot_details[:facing]}"
+    end
   end
 
   private
