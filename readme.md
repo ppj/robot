@@ -13,8 +13,15 @@ git clone git@github.com:ppj/robot.git
 Ensure you have Ruby version 2.6.6 or above installed.
 
 Install necessary gems with
-```
+```bash
 bundle install
+```
+
+## Tests
+
+Run all tests with
+```bash
+rspec
 ```
 
 ## Execution
@@ -35,7 +42,7 @@ Enable quick feedback to see whether your commands worked (👌) or not (👎) b
 
 ### Read commands from a file
 Run the following command
-```
+```bash
 ./run.rb /path/to/the/command/file
 ```
 
