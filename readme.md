@@ -66,6 +66,8 @@ List of valid commands the program can interpret & action:
   - turns the robot 90° in the counter-clockwise direction within its current location
 - `REPORT`
   - reports the current location and facing direction of the robot
+- `EXIT`
+  - quit
 
 ## Design
 
