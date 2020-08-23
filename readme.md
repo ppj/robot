@@ -55,9 +55,13 @@ Notes:
 List of valid commands the program can interpret & action:
 - `NAME: PLACE X,Y,F`
   - places a new or existing robot in any empty location on the board, given ...
-  - given the `NAME` of the robot,
+  - the `NAME` of the robot,
   - the X & Y coordinates of the location to place it in,
-  - the direction `F` in which the robot faces (one of NORTH, EAST, SOUTH, WEST)
+  - the direction `F` in which the robot faces, which can be one of
+      - NORTH (positive Y)
+      - EAST (positive X)
+      - SOUTH (negative Y)
+      - WEST (negative X)
 - `MOVE`
   - attempts to moves the robot one cell towards the direction it is facing in
 - `RIGHT`
