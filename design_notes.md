@@ -26,13 +26,13 @@
     - reports the details given a robot name
     - returns a robot given a name
 
-  ### Cell
-    - with the following attributes
-      - x coordinate  
-      - y coordinate
-      - Robot when it is occupied
-    - can perform the following actions
-      - tell whether it is empty or not
+### Cell
+  - with the following attributes
+    - x coordinate  
+    - y coordinate
+    - Robot when it is occupied
+  - can perform the following actions
+    - tell whether it is empty or not
 
 ## Robot
   - with the following attributes
